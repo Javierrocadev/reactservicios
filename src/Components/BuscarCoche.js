@@ -1,95 +1,73 @@
 import React, { Component } from 'react'
-import axios from 'axios';
-import Global from './Global';
-export default class BuscadorCoches extends Component {
-    cajaMarca = React.createRef();
-    //VARIABLE PARA ALMACENAR TODOS LOS COCHES
-    //AL CARGAR LA PRIMERA VEZ EL SERVICIO
-    cochesAll = [];
+import axios from 'axios'
+import Global from './Global'
 
+export default class BuscarCoche extends Component {
+    cajaMarca = React.createRef()
+    cochesAll = []; //para guardar los coches la primera vez
     state = {
-        coches: [],
-        status: false
+        coches: []
     }
-    loadCoches = (e) => {
+    cargarCoche = (e) => {
         if (e != null) {
             e.preventDefault();
         }
-
-        var request = "webresources/coches";
-        var url = Global.urlApiCoches + request;
-        axios.get(url).then(response => {
+        var request = "webresources/coches"
+        var url = Global.urlApiCoches
+        console.log(url)
+        axios.get(url + request).then((response) => {
+            console.log(response)
             this.setState({
-                coches: response.data,
-                status: true
+                coches: response.data
+
             })
-            this.cochesAll = response.data;
+            this.cochesAll = response.data
         })
+
     }
-    filtrarCoches = (e) => {
-        e.preventDefault();
-        var cars = this.cochesAll;
-        var marca = this.cajaMarca.current.value.toLowerCase();
-        //DEBERIAMOS HACER UN BUCLE Y ALMACENAR LOS COCHES FILTRADOS EN ALGUN
-        //SITIO
-        // var cochesFiltrados = [];
-        // for (var car of cars){
-        //     if (car.marca.toLowerCase() == marca){
-        //         cochesFiltrados.push(car);
-        //     }
-        // }
-        //TAMBIEN PODEMOS UTILIZAR UN METODO DE LA CLASE ARRAY
-        //QUE ES EL METODO filter Y NOS DEVUELVE UN ARRAY CON LOS 
-        //ELEMENTOS DE LA BUSQUEDA
-        //Array.filter(objetoArray => objetoArray.propiedad == valor)
-        var cochesFiltrados =
-            cars.filter(car => car.marca.toLowerCase().includes(marca));
-        //ASIGNAMOS LOS COCHES AL STATE
+    buscarCoche = (e) => {
+        e.preventDefault()
+        var cochesTemp = this.cochesAll
+        var marca = this.cajaMarca.current.value
+        var cochesFiltrados = cochesTemp.filter(coche => coche.marca.includes(marca))
         this.setState({
-            coches: cochesFiltrados,
-            status: true
+            coches: cochesFiltrados
         })
     }
     componentDidMount = () => {
-        this.loadCoches();
+        this.cargarCoche()
     }
     render() {
         return (
             <div>
-                <h1>BuscadorCoches</h1>
+                <h1>BuscarCoche</h1>
                 <form>
-                    <label>Introduzca marca</label>
+                    <label>ID Customer: </label>
                     <input type="text" ref={this.cajaMarca} />
-                    <button onClick={this.filtrarCoches}>Buscar coches</button>
-                    <button onClick={this.loadCoches}>Todos coches</button>
+                    <button onClick={this.buscarCoche}>Buscar coche</button>
+                    <button onClick={this.cargarCoche}>Recargar coche</button>
                 </form>
-                <table border="1">
+                <table border={1}>
                     <thead>
                         <tr>
-                            <th>Coche</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
                             <th>Conductor</th>
                             <th>Imagen</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            this.state.status == true &&
-                            (
-                                this.state.coches.map((car, index) => {
-                                    return (<tr key={index}>
-                                        <td>
-                                            {car.marca + " " + car.modelo}
-                                        </td>
-                                        <td>
-                                            {car.conductor}
-                                        </td>
-                                        <td>
-                                            <img src={car.imagen}
-                                                style={{ width: "250px", height: "250px" }} />
-                                        </td>
-                                    </tr>)
-                                })
-                            )
+                            this.state.coches.map((coche, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td><p>{coche.marca}</p></td>
+                                        <td><p>{coche.modelo}</p></td>
+                                        <td><p>{coche.conductor}</p></td>
+                                        <td><img style={{ width: "150px", height: "150px" }} src={coche.imagen} alt='' /></td>
+                                    </tr>
+                                )
+                            })
                         }
                     </tbody>
                 </table>
