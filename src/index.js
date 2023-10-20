@@ -8,12 +8,19 @@ import Global from './Components/Global';
 import BuscadorCustomer from './Components/BuscadorCustomer';
 import BuscarCoche from './Components/BuscarCoche';
 import DepartamentosEmpleados from './Components/DepartamentosEmpleados';
-
+import Departamentos from './Components/MaestroDetalle/Departamentos';
+import Empleados from './Components/MaestroDetalle/Empleados'
+import TablaMultiplicar from './Components/RutasParametros/TablaMultiplicar';
+import NotFound from './Components/RutasParametros/NotFound';
+import MenuRutas from './Components/RutasParametros/MenuRutas';
+import Router from './Components/Router';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/* <BuscarCoche /> */}
-    <DepartamentosEmpleados />
+    {/* <DepartamentosEmpleados /> */}
+    <MenuRutas />
+    <Router />
   </React.StrictMode>
 );
 
