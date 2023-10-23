@@ -14,13 +14,19 @@ import TablaMultiplicar from './Components/RutasParametros/TablaMultiplicar';
 import NotFound from './Components/RutasParametros/NotFound';
 import MenuRutas from './Components/RutasParametros/MenuRutas';
 import Router from './Components/Router';
+import MenuRutasCollatz from './Components/RutasCollatz/MenuRutasCollatz';
+import "bootstrap/dist/css/bootstrap.min.css"
+import $ from 'jquery'
+import Popper from 'popper.js';
+import 'bootstrap/dist/js/bootstrap.bundle'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/* <BuscarCoche /> */}
     {/* <DepartamentosEmpleados /> */}
-    <MenuRutas />
+    {/* <MenuRutas /> */}
     <Router />
+    {/* <MenuRutasCollatz /> */}
   </React.StrictMode>
 );
 
